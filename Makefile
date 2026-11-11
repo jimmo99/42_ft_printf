@@ -6,7 +6,7 @@
 #    By: ssaavedr <ssaavedr@student.42urduliz.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/11/01 13:08:44 by ssaavedr          #+#    #+#              #
-#    Updated: 2026/11/01 13:11:49 by ssaavedr         ###   ########.fr        #
+#    Updated: 2026/11/11 14:57:07 by ssaavedr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ AR = ar rcs
 RM = rm -f
 
 SRCS =	ft_printf.c \
-		ft_printf_aux.c
+		ft_printf_aux.c \
+		ft_printf_aux2.c
 
 OBJS = $(SRCS:.c=.o)
 

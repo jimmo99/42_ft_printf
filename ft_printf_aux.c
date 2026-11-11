@@ -6,7 +6,7 @@
 /*   By: ssaavedr <ssaavedr@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/01 13:10:07 by ssaavedr          #+#    #+#             */
-/*   Updated: 2026/11/01 16:06:33 by ssaavedr         ###   ########.fr       */
+/*   Updated: 2026/11/11 15:13:18 by ssaavedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,17 @@ int	ft_printchar(char c)
 
 int	ft_printstr(char *str)
 {
-	size_t	i;
+	int	i;
 
 	if (!str)
-		return (null);
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
 	i = 0;
 	while (str[i])
 	{
-		write(1, &str[i], 1)
+		write(1, &str[i], 1);
 		i++;
 	}
 	return (i);
@@ -55,11 +58,35 @@ int	ft_printnbr(int n)
 	return (count);
 }
 
-int	ft_printunsignednbr(unsigned int n);
-//imprimir unsigned int
+int	ft_printunsignednbr(unsigned int n)
+{
+	char	l_numb;
+	int		count;
 
-int	ft_printhexadecimal(unsigned int n, char format);
-//imprimir hexadecimales
+	count = 0;
+	if (n >= 10)
+		count += ft_printunsignednbr(n / 10);
+	l_numb = (n % 10) + '0';
+	write(1, &l_numb, 1);
+	count++;
+	return (count);
+}
 
-int	ft_printpointer(void *ptr);
-//imprime pointers
+int	ft_printhexadecimal(unsigned int n, char format)
+{
+	char	*base;
+	char	current_digit;
+	int		count;
+
+	count = 0;
+	if (format == 'x')
+		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
+	if (n >= 16)
+		count += ft_printhexadecimal(n / 16, format);
+	current_digit = base[n % 16];
+	write(1, &current_digit, 1);
+	count++;
+	return (count);
+}

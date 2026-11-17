@@ -30,10 +30,8 @@ As with the original `printf()`, `ft_printf()` returns the total number of chara
 ├── README.md
 ├── ft_printf.h        # Prototypes and required includes
 ├── ft_printf.c        # ft_printf() main loop and conversion dispatcher
-├── ft_print_char.c    # %c (and the base write primitive used everywhere)
-├── ft_print_str.c     # %s
-├── ft_print_nbr.c     # %d, %i, %u
-└── ft_print_hex.c     # %x, %X, %p
+├── ft_printf_aux.c    # %c %s %d %i %u %x %%
+├── ft_printf_aux2.c     # %p %x %X
 ```
 
 ## Instructions
@@ -93,7 +91,7 @@ int b = ft_printf("%s|%d|%x|%p\n", "abc", -42, 3735928559u, (void *)0);
 
 1. Initialise the argument list with `va_start`.
 2. Walk the format string character by character.
-3. If the character is `%` and is followed by another character, hand the next character to a dispatcher (`ft_conversion_type`), which reads the matching argument with `va_arg` and calls the right printing function. Two characters are consumed (`%` and the specifier).
+3. If the character is `%` and is followed by another character, hand the next character to a dispatcher (`ft_format`), which reads the matching argument with `va_arg` and calls the right printing function. Two characters are consumed (`%` and the specifier).
 4. Otherwise, print the character as it is.
 5. Accumulate the number of bytes written by every call and return the total after `va_end`.
 
@@ -106,7 +104,7 @@ The mandatory part only requires nine conversions and no flags, width or precisi
 - The return value of `ft_printf()` is obtained by summing the return values, with no global state and no counter passed by pointer.
 - Every function is short, independent and easy to test, and fits the Norme (function length, number of parameters).
 - Adding a new conversion means writing one function and adding one branch.
-- `%x` and `%X` share a single function, `ft_print_hex()`, which receives the digit set as a parameter (`"0123456789abcdef"` or `"0123456789ABCDEF"`). `%p` reuses it too, simply prefixing `0x`.
+- `%x` and `%X` share a single function, `ft_printhexadecimal()`, which receives the digit set as a parameter (`"0123456789abcdef"` or `"0123456789ABCDEF"`). `%p` reuses it too, simply prefixing `0x`.
 
 ### Number printing: recursion instead of buffers
 
@@ -116,7 +114,7 @@ Some details worth noting:
 
 - **`%d` / `%i`**: if the number is negative, `-` is printed and the value is converted to `long` before being negated. This is what makes `INT_MIN` work, since `-INT_MIN` does not fit in an `int`.
 - **`%u`**: reuses the same decimal routine as `%d`, taking an `unsigned int`.
-- **`%x` / `%X`**: take an `unsigned int`, passed to `ft_print_hex()` as an `unsigned long`.
+- **`%x` / `%X`**: take an `unsigned int`, passed to `ft_print_hexadecimal()` as an `unsigned long`.
 - **`%p`**: the pointer is cast to `unsigned long` (wide enough to hold an address on 64-bit systems) and printed in lowercase hexadecimal prefixed by `0x`. A `NULL` pointer prints `(nil)`, matching glibc behaviour.
 - **`%s`**: a `NULL` string prints `(null)`, matching glibc behaviour.
 - **`%c`**: the argument is read as `int` (default argument promotion) and written as a single byte.

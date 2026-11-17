@@ -6,7 +6,7 @@
 /*   By: ssaavedr <ssaavedr@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/01 13:29:27 by ssaavedr          #+#    #+#             */
-/*   Updated: 2026/11/11 17:49:42 by ssaavedr         ###   ########.fr       */
+/*   Updated: 2026/11/17 13:42:07 by ssaavedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static int	ft_format(char specifier, va_list args)
 	else if (specifier == 'u')
 		count += ft_printunsignednbr(va_arg(args, unsigned int));
 	else if (specifier == 'x' || specifier == 'X')
-		count += ft_printhexadecimal (va_arg(args, unsigned int), specifier);
+		count += ft_printhexadecimal(va_arg(args, unsigned int), specifier);
 	else if (specifier == '%')
-		count += ft_printchar ('%');
+		count += ft_printchar('%');
 	return (count);
 }
 
